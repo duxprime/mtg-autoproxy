@@ -749,6 +749,28 @@ function insertManaCost(textAndIcons, cardManaCost) {
     formatText(cardManaCost, [], -1, false);
     docRef.activeLayer.name = "Mana Cost";
     docRef.activeLayer.textItem.justification = Justification.RIGHT; // Force justification
+
+    var leftShift = ((cardManaCost.length/3)*70);
+    var idmove = charIDToTypeID( "move" );
+    var desc2 = new ActionDescriptor();
+    var idnull = charIDToTypeID( "null" );
+    var ref2 = new ActionReference();
+    var idLyr = charIDToTypeID( "Lyr " );
+    var idOrdn = charIDToTypeID( "Ordn" );
+    var idTrgt = charIDToTypeID( "Trgt" );
+    ref2.putEnumerated( idLyr, idOrdn, idTrgt );
+    desc2.putReference( idnull, ref2 );
+    var idT = charIDToTypeID( "T   " );
+    var desc3 = new ActionDescriptor();
+    var idHrzn = charIDToTypeID( "Hrzn" );
+    var idRlt = charIDToTypeID( "#Rlt" );
+    desc3.putUnitDouble( idHrzn, idRlt, -leftShift );
+    var idVrtc = charIDToTypeID( "Vrtc" );
+    var idRlt = charIDToTypeID( "#Rlt" );
+    desc3.putUnitDouble( idVrtc, idRlt, 0.000000 );
+    var idOfst = charIDToTypeID( "Ofst" );
+    desc2.putObject( idT, idOfst, desc3 );
+    executeAction( idmove, desc2, DialogModes.NO );
   } else {
     manaCostLayer.visible = false;
   }
